@@ -29,12 +29,12 @@ jobs:
         run: gradle clean remapJar --no-daemon
       - name: Verify
         run: |
-          test -f build/libs/moneygraph-1.0.3.jar
-          unzip -l build/libs/moneygraph-1.0.3.jar | grep 'com/jryoung/moneygraph/MoneyGraphClient.class'
-          ! unzip -l build/libs/moneygraph-1.0.3.jar | grep -q 'net/minecraft/client/Minecraft.class'
-          unzip -p build/libs/moneygraph-1.0.3.jar fabric.mod.json | grep '"version": "1.0.3"'
+          test -f build/libs/moneygraph-1.0.4.jar
+          unzip -l build/libs/moneygraph-1.0.4.jar | grep 'com/jryoung/moneygraph/MoneyGraphClient.class'
+          ! unzip -l build/libs/moneygraph-1.0.4.jar | grep -q 'net/minecraft/client/Minecraft.class'
+          unzip -p build/libs/moneygraph-1.0.4.jar fabric.mod.json | grep '"version": "1.0.4"'
       - uses: actions/upload-artifact@v4
         with:
-          name: moneygraph-1.0.3
-          path: moneygraph/build/libs/moneygraph-1.0.3.jar
+          name: moneygraph-1.0.4
+          path: moneygraph/build/libs/moneygraph-1.0.4.jar
           if-no-files-found: error
