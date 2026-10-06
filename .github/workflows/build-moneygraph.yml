@@ -1,0 +1,40 @@
+name: Build MoneyGraph 1.21.11
+
+on:
+  push:
+    branches: [ "build/moneygraph-1.0.3" ]
+    paths:
+      - "moneygraph/**"
+      - ".github/workflows/build-moneygraph.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: moneygraph
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.4.0"
+      - name: Build remapped jar
+        run: gradle clean remapJar --no-daemon
+      - name: Verify
+        run: |
+          test -f build/libs/moneygraph-1.0.3.jar
+          unzip -l build/libs/moneygraph-1.0.3.jar | grep 'com/jryoung/moneygraph/MoneyGraphClient.class'
+          ! unzip -l build/libs/moneygraph-1.0.3.jar | grep -q 'net/minecraft/client/Minecraft.class'
+          unzip -p build/libs/moneygraph-1.0.3.jar fabric.mod.json | grep '"version": "1.0.3"'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: moneygraph-1.0.3
+          path: moneygraph/build/libs/moneygraph-1.0.3.jar
+          if-no-files-found: error
