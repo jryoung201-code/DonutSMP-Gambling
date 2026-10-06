@@ -17,7 +17,7 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "modmenu": "17.0.0"
+    "modmenu": "17.0.1"
   },
   "custom": {
     "modmenu": {
