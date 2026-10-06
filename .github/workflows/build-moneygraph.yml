@@ -2,7 +2,7 @@ name: Build MoneyGraph 1.21.11
 
 on:
   push:
-    branches: [ "build/moneygraph-1.0.3" ]
+    branches: [ "main" ]
     paths:
       - "moneygraph/**"
       - ".github/workflows/build-moneygraph.yml"
